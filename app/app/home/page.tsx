@@ -1,13 +1,14 @@
 import { AuthenticationForm } from '../../components/Authentication/Authentication';
 import { Welcome } from '../../components/Welcome/Welcome';
+import { AppStructure } from '../../components/AppShell/AppShell';
 
 export default function HomePage() {
   return (
     <>
-      {/* <RootLayout useAppShell={true}>
+      <AppStructure>
         <Welcome></Welcome>
-      </RootLayout> */}
-      <Welcome></Welcome>
+      </AppStructure>
+
     </>
   );
 }
