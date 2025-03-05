@@ -1,0 +1,22 @@
+.mapView {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    gap: 0;
+  }
+  
+  .mapContainer {
+    background-color: lightgrey;
+    flex: 3;
+    height: 100%;
+    width: 50%;
+  }
+  
+  .sidebar {
+    flex: 2;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  
