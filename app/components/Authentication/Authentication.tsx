@@ -13,16 +13,19 @@ import {
     Text,
     TextInput,
   } from '@mantine/core';
+  import { useEffect, useState } from 'react';
   import { useForm } from '@mantine/form';
   import { upperFirst, useToggle } from '@mantine/hooks';
+  import { signIn, getSession } from 'next-auth/react';
   import { GoogleButton } from './GoogleButton';
   import { useRouter } from 'next/navigation';
  
   export function AuthenticationForm(props: PaperProps) {
-    const router = useRouter();
-    const handleAuth = () => {
-      router.push('/home');
+    const handleAuth = async () => {
+      const authResult = await signIn('google', { callbackUrl: '/home' });
+
     }
+
     const [type, toggle] = useToggle(['login', 'register']);
     const form = useForm({
       initialValues: {
