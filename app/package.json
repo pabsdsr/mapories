@@ -31,7 +31,8 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-map-gl": "^8.0.1",
-    "vercel": "^41.3.1"
+    "vercel": "^41.3.1",
+    "next-auth": "^4.24.11"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
