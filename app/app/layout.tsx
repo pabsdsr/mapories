@@ -23,9 +23,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
-          <AppStructure>
+          {children}
+          {/* <AppStructure>
             {children}
-          </AppStructure>
+          </AppStructure> */}
         </MantineProvider>
       </body>
     </html>

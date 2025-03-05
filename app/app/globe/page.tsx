@@ -1,12 +1,13 @@
 
 import { Globe } from '../../components/Globe/Globe';
+import { AppStructure } from '@/components/AppShell/AppShell';
 
 
 export default function MapView() {
   return (
-    // <RootLayout useAppShell={true}>
-    //     <Globe></Globe>
-    // </RootLayout>
-    <Globe></Globe>
+    <AppStructure>
+      <Globe></Globe>
+    </AppStructure>
+  
   );
 }
