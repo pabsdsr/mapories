@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { createClient } from '@/utils/supabase/server';
 import { NextAuthOptions } from "next-auth";
 
 const authOptions: NextAuthOptions = {
@@ -17,11 +18,30 @@ const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-        if (user.email === 'pabs.dsr123@gmail.com') {
-            return true;
-        } else {
-            return false;
-        }
+      const supabase = await createClient();
+      
+      const { data: fetchedUser } = await supabase.from("user").select().eq('email', user.email).single();
+      const fetchedUsersId = fetchedUser?.id;
+
+      if (!fetchedUser) {
+        
+        // await supabase.from("user").insert([
+        //   {
+        //     email: user.email,
+        //     name: user.name,
+        //     image: user.image,
+        //   },
+        // ]);
+        return false;
+      }
+
+      const { data: fetchWhiteListed } = await supabase.from("whitelist").select().eq('user_id', fetchedUsersId).single();
+
+      if (fetchWhiteListed) {
+          return true;
+      } else {
+          return false;
+      }
     },
   },
 };
