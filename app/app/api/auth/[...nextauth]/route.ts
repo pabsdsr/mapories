@@ -10,6 +10,13 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.NEXT_GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 24 * 60 * 60,
+  },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
@@ -19,7 +26,7 @@ const authOptions: NextAuthOptions = {
     },
     async signIn({ user, account, profile, email, credentials }) {
       const supabase = await createClient();
-      
+
       const { data: fetchedUser } = await supabase.from("user").select().eq('email', user.email).single();
       const fetchedUsersId = fetchedUser?.id;
 
