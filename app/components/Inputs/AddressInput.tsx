@@ -10,8 +10,13 @@ const AddressAutofill = dynamic(
   { ssr: false }
 );
 
-export function AddressInput() {
-  const [address, setAddress] = useState('');
+interface AddressInputProps {
+  address: string;
+  onChange: (value: string) => void;
+  onAddressRetrieve?: (fullAddress: string) => void;
+}
+
+export function AddressInput({address, onChange, onAddressRetrieve}: AddressInputProps) {
 
   React.useEffect(() => {
 
@@ -24,25 +29,25 @@ export function AddressInput() {
   const handleRetrieve = (result: any) => {
     const fullAddress = result.features[0]?.properties?.full_address || '';
     console.log(fullAddress);
-    setAddress(fullAddress); 
+    if(onAddressRetrieve) {
+      onAddressRetrieve(fullAddress);
+    }
 
   };
 
 
   return (
-    <form>
       <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN} onRetrieve={handleRetrieve}>
         <TextInput 
           type="text" 
           name="address" 
           autoComplete="address-line1" 
           value={address} 
-          onChange={(e) => setAddress(e.target.value)} 
+          onChange={(e) => onChange(e.target.value)} 
           placeholder="Enter address..."
           label = "Address"
           classNames={classes}
         />
       </AddressAutofill>
-    </form>
   );
 }

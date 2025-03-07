@@ -2,6 +2,7 @@ import { AuthenticationForm } from '../../components/Authentication/Authenticati
 import { Welcome } from '../../components/Welcome/Welcome';
 import { AppStructure } from '../../components/AppShell/AppShell';
 
+
 export default function HomePage() {
   return (
     <>
