@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import {AddressInput} from '../Inputs/AddressInput'
 import { getApiURL } from '../../utils/api';
-import { ContainedInputs } from "../Inputs/ContainedInputs";
+import { useSession } from 'next-auth/react';
 import { TextInput } from '@mantine/core';
 import { Button } from '@mantine/core';
 import mapboxgl from "mapbox-gl";
@@ -21,6 +21,7 @@ export function Globe () {
   const [fullAddress, setFullAddress] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
+  
 
   const handleSubmit = async (e:React.SyntheticEvent) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export function Globe () {
     const formData = {
       fullAddress,
       title,
-      description
+      description,
     };
     const response = await fetch(`${baseURL}/pin`, {
       method: 'POST',

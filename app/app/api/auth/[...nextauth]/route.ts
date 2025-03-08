@@ -22,6 +22,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
 
       session.user.id = token.sub!;
+      session.user.email = token.email!;
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
@@ -32,13 +33,11 @@ const authOptions: NextAuthOptions = {
 
       if (!fetchedUser) {
         
-        // await supabase.from("user").insert([
-        //   {
-        //     email: user.email,
-        //     name: user.name,
-        //     image: user.image,
-        //   },
-        // ]);
+        await supabase.from("user").insert([
+          {
+            email: user.email
+          },
+        ]);
         return false;
       }
 
@@ -52,7 +51,7 @@ const authOptions: NextAuthOptions = {
     },
   },
 };
-
+export default authOptions;
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
