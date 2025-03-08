@@ -20,6 +20,7 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
+    "@mantine/carousel": "^7.17.1",
     "@mantine/core": "7.17.0",
     "@mantine/form": "^7.17.0",
     "@mantine/hooks": "7.17.0",
@@ -29,9 +30,11 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.49.1",
     "@tabler/icons-react": "^3.28.1",
+    "embla-carousel-react": "^7.1.0",
     "mapbox-gl": "^3.10.0",
     "next": "15.1.5",
     "next-auth": "^4.24.11",
+    "or": "^0.2.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-map-gl": "^8.0.1",
