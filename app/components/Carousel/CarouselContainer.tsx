@@ -2,7 +2,6 @@
 import { IconStar } from '@tabler/icons-react';
 import { Flex, Box } from '@mantine/core';
 import { CarouselCard } from './CarouselCard';
-import { Carousel } from '@mantine/carousel';
 import { Button, Card, Group, Image, Text } from '@mantine/core';
 import classes from './CarouselCard.module.css';
 
