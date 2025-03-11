@@ -1,8 +1,8 @@
-import { createClient } from '@/utils/supabase/server';
+import  { DriveTest }  from '../../components/driveTest/driveTest';
 
-export default async function Users() {
-  const supabase = await createClient();
-  const { data: users } = await supabase.from("user").select();
-
-  return <pre>{JSON.stringify(users, null, 2)}</pre>
+export default function Test() {
+  return (
+    <DriveTest></DriveTest>
+  
+  );
 }
