@@ -15,11 +15,13 @@ const images = [
 ];
 
 export function CarouselCard({address, title, description}: CarouselCardProps) {
+
   const slides = images.map((image) => (
     <Carousel.Slide key={image}>
       <Image src={image} height={220} />
     </Carousel.Slide>
   ));
+
 
   return (
     <Card radius="md" withBorder padding="xl">
@@ -70,5 +72,6 @@ export function CarouselCard({address, title, description}: CarouselCardProps) {
         <Button radius="md">View</Button>
       </Group>
     </Card>
+    
   );
 }

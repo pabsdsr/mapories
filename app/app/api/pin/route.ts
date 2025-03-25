@@ -11,6 +11,8 @@ export async function POST(request: NextRequest) {
         const title = data.title;
         const description = data.description;
         const fullAddress = data.fullAddress;
+        const imageBlob = data.image;
+
         if(!session) {
             return NextResponse.json({ message: 'User is not logged in'});
         }
@@ -19,8 +21,18 @@ export async function POST(request: NextRequest) {
 
         const supabase = await createClient();
         const { data: fetchedUser } = await supabase.from("user").select().eq('email', email).single();
+
+        if(fetchedUser){
+            console.log("we fetched the user", fetchedUser.id)
+        }else{
+            console.log("we did not get a user");
+        }
         const user_id = fetchedUser.id;
-        const { data: pin } = await supabase.from('pin').insert([{ user_id: user_id, title: title, description: description, address: fullAddress }]);
+        const { data: pin, error } = await supabase.from('pin').insert([{ user_id: user_id, title: title, description: description, address: fullAddress, image: imageBlob}]);
+        
+        if(error){
+            console.error(error);
+        }
 
         return NextResponse.json({ message: 'Data Arrived To EndPoint'});
     } catch (error) {

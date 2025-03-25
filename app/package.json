@@ -30,6 +30,8 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.49.1",
     "@tabler/icons-react": "^3.28.1",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
     "axios": "^1.8.2",
     "embla-carousel-react": "^7.1.0",
     "googleapis": "^146.0.0",

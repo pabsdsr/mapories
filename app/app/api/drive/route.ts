@@ -24,7 +24,8 @@ export async function GET() {
             const drive = google.drive({ version: 'v3', auth: oauth2client });
 
             const res = await drive.files.list({
-                q: "mimeType contains 'image/'",
+                q: `'1ptW7LMoP-4DbKY-xn6DD8YVbH3kHRQw4' in parents and mimeType contains 'image/'`,
+                // q: "mimeType contains 'image/'",
                 fields: "files(id, name, mimeType, thumbnailLink)",
                 spaces: 'drive',
             });

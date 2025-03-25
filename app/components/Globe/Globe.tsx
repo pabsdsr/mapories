@@ -10,6 +10,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import styles from "./Globe.module.css";
 import classes from '../Inputs/ContainedInputs.module.css';
+import { DrivePickerWrapper } from "../driveTest/DrivePickerWrapper";
 
 
 
@@ -21,6 +22,8 @@ export function Globe () {
   const [fullAddress, setFullAddress] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [selectedImage, setSelectedImage] = React.useState<{ id: string; name: string, blob: string} | null>(null);
+
   
 
   const handleSubmit = async (e:React.SyntheticEvent) => {
@@ -30,6 +33,7 @@ export function Globe () {
       fullAddress,
       title,
       description,
+      image: selectedImage?.blob,
     };
     const response = await fetch(`${baseURL}/pin`, {
       method: 'POST',
@@ -78,8 +82,20 @@ export function Globe () {
             value={description}
             onChange={(e) => setDescription(e.currentTarget.value)}
           />
+          <DrivePickerWrapper onImageSelect={setSelectedImage}/>
           <Button onClick={handleSubmit}>Create Pin</Button>
         </form>
+        {selectedImage && (
+          <div>
+            <p>Selected Image:</p>
+            <p>Name: {selectedImage.name}</p>
+            <img
+              src={selectedImage.blob} // Now should be a full data URI with correct prefix
+              alt={selectedImage.name}
+              className="pin-image"
+            />
+          </div>
+        )}
       </div>
     </div>
   )
