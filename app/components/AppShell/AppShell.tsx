@@ -4,6 +4,7 @@ import { AppShell, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Navbar } from '../Navigation/Navbar'
 import React, { ReactNode } from 'react';
+import styles from "./AppShell.module.css";
 
 interface AppStructureProps {
     children: ReactNode;
@@ -23,13 +24,22 @@ export function AppStructure({ children }: AppStructureProps) {
       padding="md"
     >
       <AppShell.Header>
-        <Burger
+        {/* <Burger
           opened={opened}
           onClick={toggle}
           hiddenFrom="sm"
           size="sm"
-        />
-        <div>Mapories</div>
+        /> */}
+        <div className="flex items-center justify-center w-full h-full text-center">
+          {/* <span className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl 
+                          font-bold truncate max-w-full">
+            Mapories
+          </span> */}
+          <span className={styles.title}>
+              Mapories
+          </span>
+        </div>
+
       </AppShell.Header>
 
       <AppShell.Navbar p="md">

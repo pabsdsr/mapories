@@ -20,11 +20,6 @@ import { useRouter } from 'next/navigation'
 const data = [
   { link: '', label: 'Home', icon: IconBellRinging },
   { link: '', label: 'Globe', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
 ];
 
 export function Navbar() {

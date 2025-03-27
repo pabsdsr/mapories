@@ -21,6 +21,7 @@ export function Globe () {
   const [address, setAddress] = React.useState('');
   const [fullAddress, setFullAddress] = React.useState('');
   const [title, setTitle] = React.useState('');
+  const [pins, setPins] = React.useState([]);
   const [description, setDescription] = React.useState('');
   const [selectedImage, setSelectedImage] = React.useState<{ id: string; name: string, blob: string} | null>(null);
 
@@ -45,13 +46,31 @@ export function Globe () {
     console.log(response);
   };
 
+  const fetchPins = async () => {
+    try {
+      const response = await fetch(`${baseURL}/pin`, {
+        method: 'GET'});
+      
+      if (response.status === 200) {
+        const pins = await response.json();
+        setPins(pins);
+        console.log("these are the pins", pins);
+      }
+      
+    } catch (error) {
+      console.error("Error fetching pins:", error);
+    }
+  }
+
   React.useEffect(() => {
     const node = mapNode.current;
 
     if (typeof window === "undefined" || node == null) {
       return;
     }
-  
+
+    fetchPins();
+   
     const newMap = new mapboxgl.Map({
       container: node,
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
@@ -60,6 +79,7 @@ export function Globe () {
 
     return () => newMap.remove();
   }, []);
+
 
   return (
     <div className={styles.mapView}>
@@ -71,21 +91,23 @@ export function Globe () {
             onAddressRetrieve={(fullAddress) => setFullAddress(fullAddress)}>
           </AddressInput>
           <TextInput label="Title" 
-            placeholder="First Time In Chicago" 
+            placeholder="First Time In Chicago"
+            className={styles.formFieldTopBotton} 
             classNames={classes}
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
           <TextInput label="Description" 
-            placeholder="I got to see the bean" 
+            placeholder="I got to see the bean"
+            className={styles.formField} 
             classNames={classes}
             value={description}
             onChange={(e) => setDescription(e.currentTarget.value)}
           />
           <DrivePickerWrapper onImageSelect={setSelectedImage}/>
-          <Button onClick={handleSubmit}>Create Pin</Button>
+          <Button onClick={handleSubmit} className={styles.formFieldTop}>Create Pin</Button>
         </form>
-        {selectedImage && (
+        {/* {selectedImage && (
           <div>
             <p>Selected Image:</p>
             <p>Name: {selectedImage.name}</p>
@@ -95,7 +117,7 @@ export function Globe () {
               className="pin-image"
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

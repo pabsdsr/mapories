@@ -28,7 +28,10 @@ export function AddressInput({address, onChange, onAddressRetrieve}: AddressInpu
 
   const handleRetrieve = (result: any) => {
     const fullAddress = result.features[0]?.properties?.full_address || '';
-    console.log(fullAddress);
+    console.log(result);
+    // console.log(fullAddress);
+    // one way to do it is that i could call the geocoding api here to get the coordinates from the address
+    // then set the coordinates in the state and pass them to the parent component
     if(onAddressRetrieve) {
       onAddressRetrieve(fullAddress);
     }

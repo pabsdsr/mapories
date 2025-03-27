@@ -2,8 +2,6 @@
 import { Button } from '@mantine/core';
 import React from 'react';
 import { useSession, signIn } from "next-auth/react";
-import { blob } from 'stream/consumers';
-import { getApiURL } from '@/utils/api';
 import axios from 'axios';
 
 // Types for Google APIs
@@ -85,7 +83,7 @@ export function DriveImagePicker({ onImageSelect }: DriveImagePickerProps) {
         .setOAuthToken(token)
         .setDeveloperKey(API_KEY)
         .setCallback(pickerCallback)
-        .setTitle('Select images from Drive');
+        .setTitle('Select image from Drive');
         
       const picker = pickerBuilder.build();
       picker.setVisible(true);

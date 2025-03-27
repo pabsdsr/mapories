@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" {...mantineHtmlProps}>
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme='dark'/>
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
@@ -22,7 +22,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme}
+          defaultColorScheme='dark'
+        >
           {children}
           {/* <AppStructure>
             {children}
