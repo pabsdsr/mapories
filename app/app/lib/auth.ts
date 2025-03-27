@@ -7,6 +7,12 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.NEXT_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEXT_GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: "openid email profile https://www.googleapis.com/auth/drive.readonly",
+          prompt: "consent",
+        }
+      }
     }),
   ],
   session: {
@@ -18,10 +24,20 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async jwt({ token, account, profile}) {
+
+      if (account) {
+        token.accessToken = account.access_token;
+        token.email = profile?.email;
+      }
+
+      return token
+    },
     async session({ session, token }) {
 
       session.user.id = token.sub!;
-      session.user.email = token.email!;
+      session.user.email = token.email;
+      session.accessToken = token.accessToken as string;
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
@@ -48,5 +64,6 @@ export const authOptions: NextAuthOptions = {
           return false;
       }
     },
+    
   },
 };

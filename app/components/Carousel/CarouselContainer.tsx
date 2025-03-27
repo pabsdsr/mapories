@@ -1,11 +1,27 @@
 'use client';
 import { IconStar } from '@tabler/icons-react';
 import { Flex, Box } from '@mantine/core';
+import { getApiURL } from '../../utils/api';
 import { CarouselCard } from './CarouselCard';
 import { Button, Card, Group, Image, Text } from '@mantine/core';
 import classes from './CarouselCard.module.css';
 
 export function CarouselContainer(){
+    const baseURL = getApiURL();
+
+    const handleSubmit = async (e:React.SyntheticEvent) => {
+      e.preventDefault();
+  
+      const id = 1;
+      const response = await fetch(`${baseURL}/pin/${id}`, {
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+      });
+      console.log(response);
+    };
+
     return (
         <Flex
           gap="md"
@@ -38,5 +54,6 @@ export function CarouselContainer(){
             />
           </Box>
         </Flex>
+        
       );
 }
