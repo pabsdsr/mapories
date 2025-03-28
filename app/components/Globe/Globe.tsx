@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import {AddressInput} from '../Inputs/AddressInput'
 import { getApiURL } from '../../utils/api';
-import { useSession } from 'next-auth/react';
 import { TextInput } from '@mantine/core';
 import { Button } from '@mantine/core';
 import mapboxgl from "mapbox-gl";
