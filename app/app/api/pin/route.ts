@@ -37,7 +37,8 @@ export async function POST(request: NextRequest) {
             console.log("we did not get a user");
         }
         const user_id = fetchedUser.id;
-        const { data: pin, error } = await supabase.from('pin').insert([{ user_id: user_id, title: title, description: description, address: fullAddress, image: imageBlob}]);
+        const { data: pin, error } = await supabase.from('pin').insert([{ user_id: user_id, title: title, description: description,
+             address: fullAddress, image: imageBlob, longitude: longitude, latitude: latitude}]);
         
         if(error){
             console.error(error);

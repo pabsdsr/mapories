@@ -53,8 +53,8 @@ export function Globe () {
       
       if (response.status === 200) {
         const pins = await response.json();
-        setPins(pins);
-        console.log("these are the pins", pins);
+
+        setPins(pins.message);
       }
       
     } catch (error) {
@@ -79,6 +79,24 @@ export function Globe () {
 
     return () => newMap.remove();
   }, []);
+
+  React.useEffect(() => {
+    if (map && pins.length > 0 ) {
+      pins.forEach((pin) => {
+        const { longitude, latitude, title, description, image } = pin;
+        if (!isNaN(longitude) && !isNaN(latitude)) {
+          const marker = new mapboxgl.Marker()
+          .setLngLat([longitude, latitude])
+          .setPopup(new mapboxgl.Popup().setHTML(`
+            <h3>${title}</h3>
+            <p>${description}</p>
+            <img src="${image}" alt="${title}" style="width: 100px;" />
+          `))
+          .addTo(map);
+        }
+      });
+    }
+  }, [map, pins]);
 
 
   return (
@@ -107,17 +125,6 @@ export function Globe () {
           <DrivePickerWrapper onImageSelect={setSelectedImage}/>
           <Button onClick={handleSubmit} className={styles.formFieldTop}>Create Pin</Button>
         </form>
-        {/* {selectedImage && (
-          <div>
-            <p>Selected Image:</p>
-            <p>Name: {selectedImage.name}</p>
-            <img
-              src={selectedImage.blob} // Now should be a full data URI with correct prefix
-              alt={selectedImage.name}
-              className="pin-image"
-            />
-          </div>
-        )} */}
       </div>
     </div>
   )
