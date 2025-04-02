@@ -8,6 +8,7 @@ import { Button } from '@mantine/core';
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import styles from "./Globe.module.css";
+import "./Popup.css";
 import classes from '../Inputs/ContainedInputs.module.css';
 import { DrivePickerWrapper } from "../driveTest/DrivePickerWrapper";
 
@@ -84,14 +85,17 @@ export function Globe () {
       pins.forEach((pin) => {
         const { longitude, latitude, title, description, image } = pin;
         if (!isNaN(longitude) && !isNaN(latitude)) {
-          const marker = new mapboxgl.Marker()
-          .setLngLat([longitude, latitude])
-          .setPopup(new mapboxgl.Popup().setHTML(`
-            <h3>${title}</h3>
-            <p>${description}</p>
-            <img src="${image}" alt="${title}" style="width: 100px;" />
-          `))
-          .addTo(map);
+          const marker = new mapboxgl.Marker();
+          const popup = new mapboxgl.Popup({ closeOnClick: false })
+            .setLngLat([longitude, latitude])
+            .setHTML(`
+              <h3>${title}</h3>
+              <p>${description}</p>
+              <img src="${image}" alt="${title}" style="width: 100px;" />
+            `);
+          marker.setLngLat([longitude, latitude])
+              .setPopup(popup)
+              .addTo(map);
         }
       });
     }
