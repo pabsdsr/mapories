@@ -69,12 +69,10 @@ export function DriveImagePicker({ onImageSelect }: DriveImagePickerProps) {
     setLoading(true);
     
     try {
-      const folderId = '1ptW7LMoP-4DbKY-xn6DD8YVbH3kHRQw4';
       
       const token = session.accessToken as string;
       
       const view = new window.google.picker.DocsView(window.google.picker.ViewId.DOCS_IMAGES)
-        .setParent(folderId)
         .setIncludeFolders(true)
         .setSelectFolderEnabled(false);
         

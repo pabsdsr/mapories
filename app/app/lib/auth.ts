@@ -43,6 +43,8 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       const supabase = await createClient();
 
+      console.log("can we make a supabase client?")
+
       const { data: fetchedUser } = await supabase.from("user").select().eq('email', user.email).single();
       const fetchedUsersId = fetchedUser?.id;
 

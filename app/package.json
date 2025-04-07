@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@mantine/carousel": "^7.17.1",
-    "@mantine/core": "7.17.0",
+    "@mantine/core": "^7.17.1",
     "@mantine/form": "^7.17.0",
-    "@mantine/hooks": "7.17.0",
+    "@mantine/hooks": "^7.17.1",
     "@mapbox/search-js-react": "^1.0.0",
     "@next/bundle-analyzer": "^15.1.5",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
