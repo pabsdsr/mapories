@@ -1,16 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+
 import {
-  Icon2fa,
   IconBellRinging,
-  IconDatabaseImport,
-  IconFingerprint,
-  IconKey,
   IconLogout,
-  IconReceipt2,
-  IconSettings,
+  IconWorld,
   IconSwitchHorizontal,
+  IconMapPinFilled
 } from '@tabler/icons-react';
 import { Code, Group } from '@mantine/core';
 // import { MantineLogo } from '@mantinex/mantine-logo';
@@ -19,7 +16,8 @@ import { useRouter } from 'next/navigation'
 
 const data = [
   { link: '', label: 'Home', icon: IconBellRinging },
-  { link: '', label: 'Globe', icon: IconReceipt2 },
+  { link: '', label: 'Globe', icon: IconWorld },
+  { link: '', label: 'My Pins', icon: IconWorld }
 ];
 
 export function Navbar() {
@@ -39,6 +37,8 @@ export function Navbar() {
           router.push('/globe')
         }else if(item.label == "Home") {
           router.push('/home')
+        }else if(item.label == "My Pins") {
+          router.push('/mypins')	
         }
       }}
     >
