@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation'
 const data = [
   { link: '', label: 'Home', icon: IconBellRinging },
   { link: '', label: 'Globe', icon: IconWorld },
-  { link: '', label: 'My Pins', icon: IconWorld }
+  { link: '', label: 'My Pins', icon: IconMapPinFilled }
 ];
 
 export function Navbar() {
