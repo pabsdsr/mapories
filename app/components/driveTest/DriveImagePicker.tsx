@@ -114,7 +114,9 @@ export function DriveImagePicker({ onImageSelect }: DriveImagePickerProps) {
 
         const base64Image = Buffer.from(fileResponse.data, 'binary').toString('base64');
 
-        const base64DataUrl = `data:image/png;base64,${base64Image}`;
+        const contentType = fileResponse.headers['content-type'];
+
+        const base64DataUrl = `data:${contentType};base64,${base64Image}`;
 
         const imageData = {
           id: fileId,
