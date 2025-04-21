@@ -7,7 +7,8 @@ import {
   IconLogout,
   IconWorld,
   IconSwitchHorizontal,
-  IconMapPinFilled
+  IconMapPinFilled,
+  IconHome
 } from '@tabler/icons-react';
 import { Code, Group } from '@mantine/core';
 // import { MantineLogo } from '@mantinex/mantine-logo';
@@ -15,7 +16,7 @@ import classes from './Navbar.module.css';
 import { useRouter } from 'next/navigation'
 
 const data = [
-  { link: '', label: 'Home', icon: IconBellRinging },
+  { link: '', label: 'Home', icon: IconHome },
   { link: '', label: 'Globe', icon: IconWorld },
   { link: '', label: 'My Pins', icon: IconMapPinFilled }
 ];

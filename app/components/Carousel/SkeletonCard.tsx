@@ -12,7 +12,6 @@ interface Pin {
     image?: string;
 }
 
-// Skeleton card component for loading state
 export function SkeletonCard() {
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>

@@ -36,6 +36,7 @@ export function Globe () {
       description,
       image: selectedImage?.blob,
     };
+
     const response = await fetch(`${baseURL}/pin`, {
       method: 'POST',
       headers:{

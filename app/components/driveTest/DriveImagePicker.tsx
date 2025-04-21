@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@mantine/core';
+import heic2any from 'heic2any';
 import React from 'react';
 import { useSession, signIn } from "next-auth/react";
 import axios from 'axios';
@@ -17,6 +18,22 @@ interface DriveImagePickerProps {
 }
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+
+
+function convertPNGBlobToBase64(blob: Blob): Promise<string | ArrayBuffer | null> {
+  return new Promise((resolve, reject) =>{
+    let reader = new FileReader();
+
+    
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(blob);
+  });
+}
 
 
 
@@ -112,12 +129,30 @@ export function DriveImagePicker({ onImageSelect }: DriveImagePickerProps) {
           }
         )
 
-        const base64Image = Buffer.from(fileResponse.data, 'binary').toString('base64');
 
         const contentType = fileResponse.headers['content-type'];
+        let base64Image;
+        let base64DataUrl = '';
 
-        const base64DataUrl = `data:${contentType};base64,${base64Image}`;
+        if (contentType === 'image/heic' || contentType === 'image/heif') {
 
+          const heicBlob = new Blob([fileResponse.data], { type: 'image/heic' });
+
+          const pngBlob = await heic2any({
+            blob: heicBlob,
+            toType: 'image/png'
+          });
+
+          base64DataUrl = await convertPNGBlobToBase64(pngBlob) as string;
+
+        }else{
+          base64Image = Buffer.from(fileResponse.data, 'binary').toString('base64');
+
+          base64DataUrl = `data:${contentType};base64,${base64Image}`;
+
+        }
+
+        
         const imageData = {
           id: fileId,
           name: fileName,
