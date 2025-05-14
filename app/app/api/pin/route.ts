@@ -83,11 +83,6 @@ export async function GET() {
         const { data: fetchedUser } = await supabase.from("user").select().eq('email', email).single();
 
 
-        // if (fetchedUser) {
-        //     console.log("we fetched the user", fetchedUser.user_id)
-        // }else{
-        //     console.log("we did not get a user");
-        // }
 
         const user_id = fetchedUser.user_id;
         const { data: fetchedPins, error } = await supabase.from("pin").select().eq('user_id', user_id);

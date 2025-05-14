@@ -5,22 +5,69 @@ import { getApiURL } from '../../utils/api';
 import { CarouselCard } from './CarouselCard';
 import { Button, Card, Group, Image, Text } from '@mantine/core';
 import classes from './CarouselCard.module.css';
+import { useEffect, useState } from 'react';
+
+interface Pin {
+  title: string;
+  address: string;
+  description: string;
+  images: string;
+}
+
 
 export function CarouselContainer(){
+    const [pins, setPins] = useState([]);
+    const [displayPins, setDisplayPins] = useState<Pin[]>([]);
     const baseURL = getApiURL();
 
-    const handleSubmit = async (e:React.SyntheticEvent) => {
-      e.preventDefault();
+    const getRandomSample = (array: Pin[], sampleSize: number) => {
+        if(!array || array.length === 0){
+          return [];
+        }
+        if(array.length <= sampleSize){
+          return [...array];
+        }
+
+        const shuffledArray = [...array];
+
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+
+        return shuffledArray.slice(0, sampleSize);
+    }
   
-      const id = 1;
-      const response = await fetch(`${baseURL}/pin/${id}`, {
-        method: 'GET',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-      });
-      console.log(response);
-    };
+
+    const fetchPins = async () => {
+      try {
+        const response = await fetch(`${baseURL}/pin`, {
+          method: 'GET'});
+        
+        if (response.status === 200) {
+          const pins = await response.json();
+          const randomDisplayPins = getRandomSample(pins.message, 3);
+          console.log("these are our randomly selected pins", randomDisplayPins);
+          setDisplayPins(randomDisplayPins);
+          setPins(pins.message);
+        }
+        
+      } catch (error) {
+        console.error("Error fetching pins:", error);
+      }
+    }
+
+    useEffect(() => {
+      fetchPins();
+      const interval = setInterval(() => {
+        fetchPins();
+      }, 60000);
+
+      return () => {
+        clearInterval(interval);
+      }
+      
+    }, []);
 
     return (
         <Flex
