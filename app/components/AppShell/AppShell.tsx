@@ -5,6 +5,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { Navbar } from '../Navigation/Navbar'
 import React, { ReactNode } from 'react';
 import styles from "./AppShell.module.css";
+import {
+  IconMapPinFilled
+} from '@tabler/icons-react';
 
 interface AppStructureProps {
     children: ReactNode;
@@ -38,6 +41,7 @@ export function AppStructure({ children }: AppStructureProps) {
           <span className={styles.title}>
               Mapories
           </span>
+
         </div>
 
       </AppShell.Header>

@@ -12,7 +12,7 @@ interface Pin {
     title?: string;
     address?: string;
     description?: string;
-    image?: string;
+    images?: Array<string>;
 }
 
 
@@ -99,7 +99,7 @@ export function CarouselContainerAll(){
                         >
                             <CarouselCard
                                 title={pin.title || "Untitled Pin"}
-                                image={pin.image}
+                                image={pin.images?.[0] || ""}
                             />
                         </Box>
                     ))
@@ -157,7 +157,7 @@ export function CarouselContainerAll(){
                             title={selectedPin.title || "Untitled Pin"}
                             address={selectedPin.address || "No address provided"}
                             description={selectedPin.description || "No description available"}
-                            image = {selectedPin.image}
+                            image = {selectedPin.images?.[0]}
                             expanded={true} // New prop to indicate expanded view
                         />
                     </Box>

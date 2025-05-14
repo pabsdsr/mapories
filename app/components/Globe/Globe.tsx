@@ -23,26 +23,29 @@ export function Globe () {
   const [title, setTitle] = React.useState('');
   const [pins, setPins] = React.useState([]);
   const [description, setDescription] = React.useState('');
-  const [selectedImage, setSelectedImage] = React.useState<{ id: string; name: string, blob: string} | null>(null);
+  const [selectedImage, setSelectedImage] = React.useState<{ id: string; name: string, blob: ArrayBuffer, contentType: string} | null>(null);
 
   
 
   const handleSubmit = async (e:React.SyntheticEvent) => {
     e.preventDefault();
 
-    const formData = {
-      fullAddress,
-      title,
-      description,
-      image: selectedImage?.blob,
-    };
+    const formData = new FormData();
+    formData.append('fullAddress', fullAddress);
+    formData.append('title', title);
+    formData.append('description', description);
 
+    if (selectedImage && selectedImage.blob && selectedImage.contentType){
+      const imageBlob = new Blob([selectedImage.blob], { type: selectedImage.contentType });
+
+      console.log('we have a selected image', imageBlob);
+      formData.append('image',  imageBlob)
+    } else {
+      console.log('image is not defined');
+    }
     const response = await fetch(`${baseURL}/pin`, {
       method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+      body: formData
     });
     console.log(response);
   };
@@ -82,9 +85,9 @@ export function Globe () {
   }, []);
 
   React.useEffect(() => {
-    if (map && pins.length > 0 ) {
+    if (map && Array.isArray(pins) && pins.length > 0 ) {
       pins.forEach((pin) => {
-        const { longitude, latitude, title, description, image } = pin;
+        const { longitude, latitude, title, description, images } = pin;
         if (!isNaN(longitude) && !isNaN(latitude)) {
           const marker = new mapboxgl.Marker();
           const popup = new mapboxgl.Popup({ closeOnClick: false })
@@ -92,8 +95,9 @@ export function Globe () {
             .setHTML(`
               <h3>${title}</h3>
               <p>${description}</p>
-              <img src="${image}" alt="${title}" style="width: 100px;" />
+              <img src="${images[0]}" alt="${title}" style="width: 70%;" />
             `);
+            // <img src="${image}" alt="${title}" style="width: 100px;" />
           marker.setLngLat([longitude, latitude])
               .setPopup(popup)
               .addTo(map);

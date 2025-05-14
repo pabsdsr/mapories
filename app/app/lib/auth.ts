@@ -43,10 +43,8 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       const supabase = await createClient();
 
-      console.log("can we make a supabase client?")
-
       const { data: fetchedUser } = await supabase.from("user").select().eq('email', user.email).single();
-      const fetchedUsersId = fetchedUser?.id;
+      const fetchedUsersId = fetchedUser?.user_id;
 
       if (!fetchedUser) {
         
@@ -55,10 +53,9 @@ export const authOptions: NextAuthOptions = {
             email: user.email
           },
         ]);
-        return false;
       }
 
-      const { data: fetchWhiteListed } = await supabase.from("whitelist").select().eq('user_id', fetchedUsersId).single();
+      const { data: fetchWhiteListed } = await supabase.from("whitelist").select().eq('email', user.email).single();
 
       if (fetchWhiteListed) {
           return true;

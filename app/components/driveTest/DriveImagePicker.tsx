@@ -1,6 +1,6 @@
 'use client';
+
 import { Button } from '@mantine/core';
-import heic2any from 'heic2any';
 import React from 'react';
 import { useSession, signIn } from "next-auth/react";
 import axios from 'axios';
@@ -14,7 +14,7 @@ declare global {
 }
 
 interface DriveImagePickerProps {
-  onImageSelect: (image: { id: string, name: string, blob: string}) => void;
+  onImageSelect: (image: { id: string, name: string, blob: ArrayBuffer, contentType: string}) => void;
 }
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
@@ -26,12 +26,14 @@ function convertPNGBlobToBase64(blob: Blob): Promise<string | ArrayBuffer | null
 
     
     reader.onloadend = () => {
-      resolve(reader.result);
+      if(reader.result){
+        resolve(reader.result);
+      }
     };
 
     reader.onerror = reject;
 
-    reader.readAsDataURL(blob);
+    reader.readAsArrayBuffer(blob);
   });
 }
 
@@ -130,33 +132,46 @@ export function DriveImagePicker({ onImageSelect }: DriveImagePickerProps) {
         )
 
 
-        const contentType = fileResponse.headers['content-type'];
-        let base64Image;
-        let base64DataUrl = '';
+        let contentType = fileResponse.headers['content-type'];
+        let imageArray = fileResponse.data;
+
+        let imgBlob;
+
 
         if (contentType === 'image/heic' || contentType === 'image/heif') {
 
-          const heicBlob = new Blob([fileResponse.data], { type: 'image/heic' });
+          const heicBlob = new Blob([fileResponse.data], { type: contentType });
+          if(typeof window === "undefined"){
+            return;
+          }
 
-          const pngBlob = await heic2any({
+          const heic2any = (await import("heic2any")).default;
+          if(!heic2any) {
+            console.log("Error in importing heic2any");
+          }
+
+          imgBlob = await heic2any({
             blob: heicBlob,
-            toType: 'image/png'
+            toType: 'image/png',
           });
 
-          base64DataUrl = await convertPNGBlobToBase64(pngBlob) as string;
+          const singlePngBlob = Array.isArray(imgBlob) ? imgBlob[0] : imgBlob;
+          try {
+            imageArray = await convertPNGBlobToBase64(singlePngBlob) as string;
+          } catch(conversionError){
+            console.log("Conversion Error", conversionError)
+            return;
+          }
 
-        }else{
-          base64Image = Buffer.from(fileResponse.data, 'binary').toString('base64');
-
-          base64DataUrl = `data:${contentType};base64,${base64Image}`;
+          contentType = "image/png"; 
 
         }
 
-        
         const imageData = {
           id: fileId,
           name: fileName,
-          blob: base64DataUrl,
+          blob: imageArray,
+          contentType: contentType
         }
 
         onImageSelect(imageData);
