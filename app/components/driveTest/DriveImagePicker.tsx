@@ -5,7 +5,7 @@ import React from 'react';
 import { useSession, signIn } from "next-auth/react";
 import axios from 'axios';
 
-// Types for Google APIs
+
 declare global {
   interface Window {
     gapi: any;

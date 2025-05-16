@@ -110,40 +110,6 @@ export function CarouselContainerAll(){
                     </Box>
                 )}
             </Flex>
-            {/* <Flex
-                gap="md"
-                justify="center"
-                align="flex-start"
-                direction="row"
-                wrap="wrap"
-            >
-                {Array.isArray(pins) && pins.length > 0 ? (
-                    pins.map((pin, index) => (
-                        <Box 
-                            key={pin.id || index}
-                            style={{ 
-                                flex: '1 1 calc(33.333% - 16px)', 
-                                minWidth: '300px', 
-                                maxWidth: '400px',
-                                marginBottom: '16px',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => handlePinClick(pin)}
-                        >
-                            <CarouselCard
-                                title={pin.title || "Untitled Pin"}
-                                image = {pin.image}
-                            />
-                        </Box>
-                    ))
-                ) : (
-                    <Box style={{ textAlign: 'center', width: '100%', padding: '20px' }}>
-                        {pins === null ? "Error loading pins." : "Loading pins..."}
-                    </Box>
-                )}
-            </Flex> */}
-
-            {/* Modal for expanded view */}
             <Modal
                 opened={modalOpen}
                 onClose={closeModal}
